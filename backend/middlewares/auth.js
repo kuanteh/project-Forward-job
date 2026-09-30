@@ -9,7 +9,7 @@ exports.authenticate = async (req, res, next) => {
         }
         const token = req.headers.authorization.split(" ")[1];
         const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
-        // use Model to Check the MongoDB
+        // use Model to Check the MongoDB 
         const user = await User.findById(decoded.userId);
         if (!user) throw new Error("No user found!");
         req.user = user;

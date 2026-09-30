@@ -1,5 +1,4 @@
 import { Card, Container, Row, Col, Form } from "react-bootstrap";
-import
 
 function Character () {
     return (

@@ -7,6 +7,7 @@ router.use(express.json());
 
 router.get("/", auth.authenticate, attendanceController.getAllAttendance);
 router.get("/:id", auth.authenticate, attendanceController.getAttendanceById);
+router.get("/student/:id", auth.authenticate, attendanceController.getAttendanceByStudentId);
 
 // office / teacher / admin manage attendance
 router.post("/", auth.authenticate, auth.requireRole("office", "teacher", "admin"), attendanceController.createAttendance);

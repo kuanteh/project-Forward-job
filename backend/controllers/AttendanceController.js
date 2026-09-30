@@ -44,6 +44,21 @@ exports.getAttendanceById = async (req, res) => {
     }
 };
 
+exports.getAttendanceByStudentId = async (req, res) => {
+    try {
+        const studentId = req.params.id
+        const records = await Attendance.find({ student:studentId })
+        .populate("student", "name characterName role")
+        .populate("markedBy", "name characterName role");
+        if (!records || records.length === 0) {
+            return res.status(404).json({ error: "No attendance records found for this student" });
+        }
+        res.json(records);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+};
+
 exports.createAttendance = async (req, res) => {
     try {
         const record = new Attendance({
