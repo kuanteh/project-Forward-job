@@ -5,10 +5,11 @@ const auth = require("../middlewares/auth");
 
 router.use(express.json());
 
-router.post("/register", userController.register);
-router.post("/login", userController.login);
+// character select (no password)
+router.post("/select-character", userController.selectCharacter);
 
-router.get("/", auth.authenticate, userController.getAllUsers);
+// character list can load before token
+router.get("/", userController.getAllUsers);
 router.get("/:id", auth.authenticate, userController.getUserById);
 
 // Howie (admin) manage users

@@ -9,68 +9,68 @@ const users = [
     {
         name: "Sir Paul",
         email: "paul@forward.edu",
-        password: "123456",
         role: "teacher",
         characterName: "Sir Paul",
+        image: "https://api.dicebear.com/7.x/pixel-art/svg?seed=Paul",
     },
     {
         name: "Sir Sean",
         email: "sean@forward.edu",
-        password: "123456",
         role: "teacher",
         characterName: "Sir Sean",
+        image: "https://api.dicebear.com/7.x/pixel-art/svg?seed=Sean",
     },
     {
         name: "Ms Kher Nee",
         email: "khernee@forward.edu",
-        password: "123456",
         role: "office",
         characterName: "Ms Kher Nee",
         officeRole: "kherNee",
+        image: "https://api.dicebear.com/7.x/pixel-art/svg?seed=KherNee",
     },
     {
         name: "Melissa",
         email: "melissa@forward.edu",
-        password: "123456",
         role: "office",
         characterName: "Melissa",
         officeRole: "melissa",
+        image: "https://api.dicebear.com/7.x/pixel-art/svg?seed=Melissa",
     },
     {
         name: "Yisheng",
         email: "yisheng@forward.edu",
-        password: "123456",
         role: "student",
         characterName: "Yisheng",
+        image: "https://api.dicebear.com/7.x/pixel-art/svg?seed=Yisheng",
     },
     {
         name: "ZeYu",
         email: "zeyu@forward.edu",
-        password: "123456",
         role: "student",
         characterName: "ZeYu",
+        image: "https://api.dicebear.com/7.x/pixel-art/svg?seed=ZeYu",
     },
     {
         name: "Ian",
         email: "ian@forward.edu",
-        password: "123456",
         role: "student",
         characterName: "Ian",
+        image: "https://api.dicebear.com/7.x/pixel-art/svg?seed=Ian",
     },
     {
         name: "Sir Howie",
         email: "howie@forward.edu",
-        password: "123456",
         role: "admin",
         characterName: "Sir Howie",
+        image: "https://api.dicebear.com/7.x/pixel-art/svg?seed=Howie",
     },
     {
         name: "Mike",
         email: "mike@forward.edu",
-        password: "123456",
         role: "mike",
         characterName: "Mike",
         money: 0,
+        image: "https://api.dicebear.com/7.x/pixel-art/svg?seed=Mike",
     },
 ];
 
@@ -87,13 +87,7 @@ mongoose
         await Mission.deleteMany({});
         console.log("Cleared old data");
 
-        // use save() so password hash works
-        const createdUsers = [];
-        for (const userData of users) {
-            const user = new User(userData);
-            await user.save();
-            createdUsers.push(user);
-        }
+        const createdUsers = await User.insertMany(users);
         console.log(`Seeded ${createdUsers.length} users`);
 
         const findByRole = (role, characterName) =>
@@ -180,9 +174,9 @@ mongoose
         ]);
         console.log("Seeded missions");
 
-        console.log("\nLogin accounts (password: 123456):");
+        console.log("\nCharacters:");
         createdUsers.forEach((u) => {
-            console.log(`- ${u.characterName} | ${u.email} | role: ${u.role}`);
+            console.log(`- ${u.characterName} | ${u._id} | role: ${u.role}`);
         });
 
         process.exit(0);
