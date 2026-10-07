@@ -18,28 +18,7 @@ function Character() {
         const getUsers = async () => {
             try {
                 // Get all users data from backend
-                /**
-                 * So user[0] 还是 user[1] is object ,inside object have image...
-                 * backend call back the data array :
-                 * [
-                    {
-                        _id: "...",
-                        characterName: "Yisheng",
-                        role: "student",
-                        image: "https://...",
-                        email: "yisheng@forward.edu",
-                        ...
-                    },
-                    {
-                        _id: "...",
-                        characterName: "ZeYu",
-                        role: "student",
-                        image: "https://...",
-                        email: "yisheng@forward.edu",
-                        ...
-                    },
-                    
-                 */
+                // users = array of character objects from backend
                 const response = await api.get("/users");
                 setUsers(response.data);
             } catch (err) {

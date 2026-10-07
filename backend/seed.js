@@ -5,6 +5,7 @@ const Attendance = require("./models/Attendance");
 const Mission = require("./models/Mission");
 require("dotenv").config();
 
+// only keep 5 characters for the project
 const users = [
     {
         name: "Sir Paul",
@@ -12,13 +13,6 @@ const users = [
         role: "teacher",
         characterName: "Sir Paul",
         image: "https://api.dicebear.com/7.x/pixel-art/svg?seed=Paul",
-    },
-    {
-        name: "Sir Sean",
-        email: "sean@forward.edu",
-        role: "teacher",
-        characterName: "Sir Sean",
-        image: "https://api.dicebear.com/7.x/pixel-art/svg?seed=Sean",
     },
     {
         name: "Ms Kher Nee",
@@ -29,33 +23,11 @@ const users = [
         image: "https://api.dicebear.com/7.x/pixel-art/svg?seed=KherNee",
     },
     {
-        name: "Melissa",
-        email: "melissa@forward.edu",
-        role: "office",
-        characterName: "Melissa",
-        officeRole: "melissa",
-        image: "https://api.dicebear.com/7.x/pixel-art/svg?seed=Melissa",
-    },
-    {
-        name: "Yisheng",
-        email: "yisheng@forward.edu",
-        role: "student",
-        characterName: "Yisheng",
-        image: "https://api.dicebear.com/7.x/pixel-art/svg?seed=Yisheng",
-    },
-    {
         name: "ZeYu",
         email: "zeyu@forward.edu",
         role: "student",
         characterName: "ZeYu",
         image: "https://api.dicebear.com/7.x/pixel-art/svg?seed=ZeYu",
-    },
-    {
-        name: "Ian",
-        email: "ian@forward.edu",
-        role: "student",
-        characterName: "Ian",
-        image: "https://api.dicebear.com/7.x/pixel-art/svg?seed=Ian",
     },
     {
         name: "Sir Howie",
@@ -65,12 +37,12 @@ const users = [
         image: "https://api.dicebear.com/7.x/pixel-art/svg?seed=Howie",
     },
     {
-        name: "Mike",
+        name: "Michael De Santa",
         email: "mike@forward.edu",
         role: "mike",
-        characterName: "Mike",
+        characterName: "Michael De Santa",
         money: 0,
-        image: "https://api.dicebear.com/7.x/pixel-art/svg?seed=Mike",
+        image: "https://api.dicebear.com/7.x/pixel-art/svg?seed=MichaelDeSanta",
     },
 ];
 
@@ -93,60 +65,39 @@ mongoose
         const findByRole = (role, characterName) =>
             createdUsers.find((u) => u.role === role && u.characterName === characterName);
 
-        const melissa = findByRole("office", "Melissa");
+        const paul = findByRole("teacher", "Sir Paul");
         const kherNee = findByRole("office", "Ms Kher Nee");
-        const yisheng = findByRole("student", "Yisheng");
         const zeyu = findByRole("student", "ZeYu");
-        const ian = findByRole("student", "Ian");
-        const mike = findByRole("mike", "Mike");
+        const mike = findByRole("mike", "Michael De Santa");
 
         // sample inbox
         await Inbox.insertMany([
             {
-                from: melissa._id,
-                to: yisheng._id,
-                subject: "Tuition Reminder",
-                message: "Hi Yisheng, please pay your tuition fee this week. Thank you!",
-                type: "tuition",
-            },
-            {
-                from: melissa._id,
+                from: kherNee._id,
                 to: zeyu._id,
                 subject: "Tuition Reminder",
-                message: "Hi ZeYu, your tuition payment is still pending.",
+                message: "Hi ZeYu, please pay your tuition fee this week. Thank you!",
                 type: "tuition",
             },
             {
                 from: kherNee._id,
-                to: ian._id,
+                to: zeyu._id,
                 subject: "Warning Letter",
-                message: "Ian, you were playing pingpong too long during class time. Please return to class.",
+                message: "ZeYu, you were playing pingpong too long during class time. Please return to class.",
                 type: "warning",
             },
         ]);
         console.log("Seeded inbox messages");
 
-        // sample attendance
+        // sample attendance (marked by Sir Paul)
         const today = new Date();
         await Attendance.insertMany([
-            {
-                student: yisheng._id,
-                date: today,
-                status: "present",
-                markedBy: kherNee._id,
-            },
             {
                 student: zeyu._id,
                 date: today,
                 status: "late",
-                markedBy: kherNee._id,
+                markedBy: paul._id,
                 note: "Came late from pingpong",
-            },
-            {
-                student: ian._id,
-                date: today,
-                status: "absent",
-                markedBy: kherNee._id,
             },
         ]);
         console.log("Seeded attendance records");

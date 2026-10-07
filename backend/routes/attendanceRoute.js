@@ -6,8 +6,8 @@ const auth = require("../middlewares/auth");
 router.use(express.json());
 
 router.get("/", auth.authenticate, attendanceController.getAllAttendance);
-router.get("/:id", auth.authenticate, attendanceController.getAttendanceById);
 router.get("/student/:id", auth.authenticate, attendanceController.getAttendanceByStudentId);
+router.get("/:id", auth.authenticate, attendanceController.getAttendanceById);
 
 // office / teacher / admin manage attendance
 router.post("/", auth.authenticate, auth.requireRole("office", "teacher", "admin"), attendanceController.createAttendance);

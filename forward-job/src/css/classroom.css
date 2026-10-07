@@ -1,0 +1,543 @@
+.classroom-page {
+    min-height: 100vh;
+    padding: 1.5rem;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    background: #0a0a0a;
+    background-size: cover;
+    background-position: center;
+    font-family: sans-serif;
+}
+
+/*
+ * One class per character so everybody see a different classroom.
+ * Right now it is only gradient. When the real background image is ready,
+ * drop it into src/images , import it in classroomProfiles.js and use it
+ * as background-image here instead.
+ */
+.theme-zeyu {
+    background: linear-gradient(160deg, #1e293b 0%, #0f172a 55%, #020617 100%);
+}
+
+.theme-yisheng {
+    background: linear-gradient(160deg, #312e46 0%, #1f1b2e 55%, #0d0b14 100%);
+}
+
+.theme-paul {
+    background: linear-gradient(160deg, #1f3a2e 0%, #13241c 55%, #050b08 100%);
+}
+
+.theme-sean {
+    background: linear-gradient(160deg, #3a2a1f 0%, #241a13 55%, #0b0705 100%);
+}
+
+.theme-office {
+    background: linear-gradient(160deg, #1e293b 0%, #172554 55%, #0b1220 100%);
+}
+
+.theme-howie {
+    background: linear-gradient(160deg, #3b1d4a 0%, #1f1230 55%, #0c0814 100%);
+}
+
+.classroom-top {
+    width: 100%;
+    max-width: 960px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.classroom-top h1 {
+    margin: 0;
+    color: #ffffff;
+    font-size: 1.4rem;
+}
+
+.classroom-seat {
+    margin: 0.3rem 0 0;
+    color: #9ca3af;
+    font-size: 0.8rem;
+    text-transform: capitalize;
+}
+
+.classroom-back {
+    padding: 0.5rem 1.1rem;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 999px;
+    background: rgba(0, 0, 0, 0.5);
+    color: #e5e7eb;
+    font-size: 0.75rem;
+    cursor: pointer;
+}
+
+.classroom-back:hover {
+    border-color: rgba(255, 255, 255, 0.55);
+}
+
+/* ---------- the laptop ---------- */
+.laptop {
+    width: 100%;
+    max-width: 760px;
+}
+
+.laptop-screen {
+    height: 380px;
+    padding: 0.6rem;
+    box-sizing: border-box;
+    border: 10px solid #1f2937;
+    border-radius: 10px 10px 0 0;
+    background: #0f1115;
+    overflow: hidden;
+}
+
+.laptop-base {
+    height: 14px;
+    border-radius: 0 0 14px 14px;
+    background: linear-gradient(#374151, #1f2937);
+}
+
+.laptop-app {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    color: #e5e7eb;
+}
+
+.app-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 0.5rem;
+    margin-bottom: 0.6rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.app-title {
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.app-count {
+    color: #6b7280;
+    font-size: 0.7rem;
+}
+
+.laptop-note {
+    margin: 0;
+    padding: 1rem 0.2rem;
+    color: #6b7280;
+    font-size: 0.8rem;
+}
+
+.laptop-note.error {
+    color: #f87171;
+}
+
+/* ---------- inbox app ---------- */
+.inbox-body {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 0.8rem;
+    min-height: 0;
+}
+
+.inbox-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    overflow-y: auto;
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.inbox-row {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.5rem 0.4rem;
+    border: none;
+    border-left: 2px solid transparent;
+    background: transparent;
+    color: #d1d5db;
+    font-size: 0.75rem;
+    text-align: left;
+    cursor: pointer;
+}
+
+.inbox-row:hover {
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.inbox-row.open {
+    border-left-color: #60a5fa;
+    background: rgba(96, 165, 250, 0.1);
+    color: #ffffff;
+}
+
+.unread-dot {
+    width: 6px;
+    height: 6px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: #60a5fa;
+}
+
+.inbox-subject {
+    flex: 1;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.inbox-from {
+    color: #6b7280;
+    font-size: 0.65rem;
+}
+
+.inbox-reader {
+    overflow-y: auto;
+    padding-right: 0.3rem;
+}
+
+.inbox-reader h4 {
+    margin: 0 0 0.3rem;
+    font-size: 0.95rem;
+}
+
+.reader-meta {
+    margin: 0 0 0.9rem;
+    color: #6b7280;
+    font-size: 0.7rem;
+    text-transform: capitalize;
+}
+
+.reader-text {
+    margin: 0;
+    color: #d1d5db;
+    font-size: 0.82rem;
+    line-height: 1.65;
+}
+
+/* ---------- teacher app ---------- */
+.teacher-body {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    min-height: 0;
+}
+
+.teacher-block {
+    overflow-y: auto;
+}
+
+.teacher-block h4 {
+    margin: 0 0 0.6rem;
+    color: #9ca3af;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.attendance-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.attendance-list li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.45rem 0.2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    font-size: 0.78rem;
+}
+
+.status {
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.status.present {
+    color: #22c55e;
+}
+
+.status.late {
+    color: #fbbf24;
+}
+
+.status.absent {
+    color: #f87171;
+}
+
+.teacher-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.teacher-form select,
+.teacher-form input,
+.teacher-form textarea {
+    padding: 0.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 6px;
+    background: #171a20;
+    color: #e5e7eb;
+    font-family: inherit;
+    font-size: 0.78rem;
+    box-sizing: border-box;
+    resize: none;
+}
+
+.teacher-form button {
+    padding: 0.5rem;
+    border: none;
+    border-radius: 6px;
+    background: #ffffff;
+    color: #111827;
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.teacher-form button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.form-note {
+    margin: 0;
+    color: #9ca3af;
+    font-size: 0.7rem;
+}
+
+/* ---------- desktop dock ---------- */
+.desktop-shell {
+    gap: 0.5rem;
+}
+
+.desktop-dock {
+    display: flex;
+    gap: 0.4rem;
+    padding-bottom: 0.45rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.dock-btn {
+    padding: 0.35rem 0.7rem;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 999px;
+    background: transparent;
+    color: #9ca3af;
+    font-size: 0.7rem;
+    cursor: pointer;
+}
+
+.dock-btn.active {
+    background: rgba(255, 255, 255, 0.12);
+    color: #ffffff;
+}
+
+.desktop-window {
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.desktop-window > .laptop-app {
+    height: 100%;
+}
+
+/* ---------- Forward Campus Network ---------- */
+.fcn-app {
+    height: 100%;
+}
+
+.fcn-body {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    gap: 0.7rem;
+    min-height: 0;
+}
+
+.fcn-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
+    padding-right: 0.5rem;
+}
+
+.fcn-nav {
+    width: 100%;
+    padding: 0.45rem 0.5rem;
+    border: none;
+    border-radius: 6px;
+    background: transparent;
+    color: #9ca3af;
+    font-size: 0.72rem;
+    text-align: left;
+    cursor: pointer;
+}
+
+.fcn-nav.active {
+    background: rgba(96, 165, 250, 0.15);
+    color: #ffffff;
+}
+
+.fcn-content {
+    overflow-y: auto;
+    min-height: 0;
+}
+
+.fcn-panel h4 {
+    margin: 0 0 0.35rem;
+    font-size: 0.85rem;
+}
+
+.fcn-hint {
+    margin: 0 0 0.8rem;
+    color: #6b7280;
+    font-size: 0.7rem;
+}
+
+.fcn-btn {
+    margin-top: 0.8rem;
+    padding: 0.5rem 0.9rem;
+    border: none;
+    border-radius: 6px;
+    background: #ffffff;
+    color: #111827;
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.fcn-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.attendance-list select {
+    padding: 0.25rem 0.4rem;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 4px;
+    background: #171a20;
+    color: #e5e7eb;
+    font-size: 0.7rem;
+}
+
+.review-main {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+}
+
+.review-meta {
+    color: #6b7280;
+    font-size: 0.65rem;
+}
+
+.manage-list {
+    margin-top: 0.9rem;
+}
+
+.delete-btn {
+    padding: 0.25rem 0.55rem;
+    border: none;
+    border-radius: 4px;
+    background: #7f1d1d;
+    color: #fecaca;
+    font-size: 0.65rem;
+    cursor: pointer;
+}
+
+.inbox-body.with-compose {
+    grid-template-columns: 180px 1fr 180px;
+}
+
+.inbox-compose h4 {
+    margin: 0 0 0.45rem;
+    font-size: 0.75rem;
+    color: #9ca3af;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+/* ---------- blocked ---------- */
+.classroom-page.denied {
+    align-items: center;
+    justify-content: center;
+}
+
+.denied-box {
+    width: min(360px, 85%);
+    padding: 2rem 1.5rem;
+    border: 1px solid rgba(248, 113, 113, 0.4);
+    border-radius: 10px;
+    background: #141414;
+    text-align: center;
+}
+
+.denied-box h2 {
+    margin: 0 0 0.6rem;
+    color: #f87171;
+    font-size: 1.1rem;
+}
+
+.denied-box p {
+    margin: 0 0 1.3rem;
+    color: #d1d5db;
+    font-size: 0.85rem;
+}
+
+.denied-box button {
+    padding: 0.5rem 1.6rem;
+    border: none;
+    border-radius: 999px;
+    background: #ffffff;
+    color: #111827;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+    .inbox-body,
+    .inbox-body.with-compose,
+    .teacher-body,
+    .fcn-body {
+        grid-template-columns: 1fr;
+    }
+
+    .inbox-list {
+        max-height: 120px;
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .fcn-sidebar {
+        flex-direction: row;
+        flex-wrap: wrap;
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        padding-right: 0;
+        padding-bottom: 0.5rem;
+    }
+
+    .laptop-screen {
+        height: 520px;
+    }
+}

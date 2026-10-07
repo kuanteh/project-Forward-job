@@ -22,10 +22,10 @@ const UserSchema = mongoose.Schema({
     image: {
         type: String,
     },
-    // for office staff: kherNee / melissa
+    // for office staff (Ms Kher Nee)
     officeRole: {
         type: String,
-        enum: ["kherNee", "melissa"],
+        enum: ["kherNee"],
     },
     money: {
         type: Number,
