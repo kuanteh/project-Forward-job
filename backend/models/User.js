@@ -18,14 +18,15 @@ const UserSchema = mongoose.Schema({
     characterName: {
         type: String,
     },
-    // character image url
+    // character image url , can be local like /image/xxx.png
     image: {
         type: String,
+        required: true,
     },
-    // for office staff (Ms Kher Nee)
-    officeRole: {
-        type: String,
-        enum: ["kherNee"],
+    // seed 5 characters cannot be deleted
+    isProtected: {
+        type: Boolean,
+        default: false,
     },
     money: {
         type: Number,

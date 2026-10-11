@@ -12,11 +12,59 @@
     font-family: sans-serif;
 }
 
+.classroom-seat-view {
+    position: relative;
+    padding: 0;
+    align-items: stretch;
+    justify-content: flex-end;
+}
+
+.classroom-app-view {
+    justify-content: center;
+}
+
+.classroom-app-laptop {
+    width: 100%;
+    max-width: 760px;
+}
+
+.map-back {
+    position: absolute;
+    top: 1.2rem;
+    right: 1.2rem;
+    z-index: 5;
+}
+
+.seat-back {
+    align-self: flex-end;
+}
+
+.desk-apps {
+    display: flex;
+    justify-content: center;
+    gap: 0.8rem;
+    padding: 0 1rem 12vh;
+}
+
+.desk-app-btn {
+    min-width: 140px;
+    padding: 0.7rem 1.1rem;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.55);
+    color: #ffffff;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.desk-app-btn:hover {
+    background: rgba(0, 0, 0, 0.75);
+    border-color: rgba(255, 255, 255, 0.7);
+}
+
 /*
- * One class per character so everybody see a different classroom.
- * Right now it is only gradient. When the real background image is ready,
- * drop it into src/images , import it in classroomProfiles.js and use it
- * as background-image here instead.
+ * Extra themes for office / meeting room pages that still share this css.
  */
 .theme-zeyu {
     background: linear-gradient(160deg, #1e293b 0%, #0f172a 55%, #020617 100%);
@@ -316,6 +364,11 @@
     cursor: not-allowed;
 }
 
+.teacher-form .cancel-edit-btn {
+    background: #374151;
+    color: #e5e7eb;
+}
+
 .form-note {
     margin: 0;
     color: #9ca3af;
@@ -454,14 +507,34 @@
     margin-top: 0.9rem;
 }
 
-.delete-btn {
+.manage-actions {
+    display: flex;
+    gap: 0.35rem;
+}
+
+.edit-btn,
+.delete-btn,
+.cancel-edit-btn {
     padding: 0.25rem 0.55rem;
     border: none;
     border-radius: 4px;
-    background: #7f1d1d;
-    color: #fecaca;
     font-size: 0.65rem;
     cursor: pointer;
+}
+
+.edit-btn {
+    background: #1e3a5f;
+    color: #bfdbfe;
+}
+
+.delete-btn {
+    background: #7f1d1d;
+    color: #fecaca;
+}
+
+.cancel-edit-btn {
+    background: #374151;
+    color: #e5e7eb;
 }
 
 .inbox-body.with-compose {

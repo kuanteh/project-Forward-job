@@ -8,12 +8,13 @@ import "../css/gtaForwardMap.css";
 function GtaForwardMap() {
     const location = useLocation();
     const navigate = useNavigate();
+    // characterName and role come from Character.jsx
     const characterName = location.state?.characterName || "Michael De Santa";
     const role = location.state?.role || "";
 
     // start on a place everybody can enter , if not Mike open the map and
     // the first teleport already give him an error
-    const firstOpenPlace = mapLocations.find((place) => !place.allowCharacters);
+    const firstOpenPlace = mapLocations.find((place) => !place.allowRoles);
 
     /**
      * activeId = which icon you are standing on now.
@@ -25,21 +26,30 @@ function GtaForwardMap() {
 
     const activeLocation = mapLocations.find((place) => place.id === activeId);
 
+    // (id) onclick 传上来 的 place id 在传给 setActiveId
     const handleSelect = (id) => {
+        // remember your current active ID (你选中的Icon)
         setActiveId(id);
-        // change place already , so the old error message no need to stay
+        // clear 掉之前 "access denied" 的message
         setBlockedMessage("");
     };
 
     const handleTeleport = () => {
-        const { label, path, extraState, allowCharacters } = activeLocation;
+        // current active location
+        // path : mapLocations.js 的path
+        const { label, path, extraState, allowRoles } = activeLocation;
 
-        // some place only open for certain character ( eg. the classroom )
-        if (allowCharacters && !allowCharacters.includes(characterName)) {
+        // check role is in allowRoles ( 限制名单)
+        // 如果 role 不在 allowRoles 里面 就显示 xxx cannot enter classroom
+        if (allowRoles && !allowRoles.includes(role)) {
             setBlockedMessage(`${characterName} cannot enter ${label}.`);
+            // stop , 不要跳页
             return;
         }
 
+        // state 是把信息带过去，下一页就可以知道你是谁
+        // so 到 classroom 就可以用 
+        //  location.state.CharacterName 
         navigate(path, { state: { characterName, role, ...extraState } });
     };
 
@@ -47,9 +57,13 @@ function GtaForwardMap() {
         <div className="map-page">
             <div className="map-stage" style={{ backgroundImage: `url(${mapImage})` }}>
                 <div className="map-hud">
-                    <strong>{characterName}</strong> {role && `· ${role}`}
+                    <strong>{characterName}</strong> · {role}
                 </div>
 
+                {/* 
+                    mapLocation 是Array 
+                    place 是 Array 的 object
+                */}
                 {mapLocations.map((place) => (
                     <button
                         key={place.id}
@@ -57,12 +71,14 @@ function GtaForwardMap() {
                         className={place.id === activeId ? "map-icon active" : "map-icon"}
                         style={{ left: `${place.x}%`, top: `${place.y}%` }}
                         title={place.label}
+                        // handleSelect 传进去 place的id 
                         onClick={() => handleSelect(place.id)}
                     >
                         {place.icon}
                     </button>
                 ))}
 
+                {/* props location get the value mapLocations */}
                 <GtaForwardMapNavBar locations={mapLocations} activeId={activeId} onSelect={handleSelect} />
 
                 <div className="map-bottom">

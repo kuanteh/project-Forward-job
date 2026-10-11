@@ -1,6 +1,9 @@
+import { useState } from "react";
 import { useLocation, useNavigate } from "react-router";
-import { classroomProfiles } from "../data/classroomProfiles";
-import LaptopDesktop from "../components/laptop/LaptopDesktop";
+import InboxApp from "../components/laptop/InboxApp";
+import ForwardCampusNetwork from "../components/laptop/ForwardCampusNetwork";
+import paulPov from "../images/SirPaulPOV.png";
+import zeyuPov from "../images/Sem1ClassroomPOVZeYu.png";
 import "../css/classroom.css";
 
 function Classroom() {
@@ -8,22 +11,18 @@ function Classroom() {
     const navigate = useNavigate();
     const characterName = location.state?.characterName || "Unknown";
     const role = location.state?.role || "";
-    const sem = location.state?.sem || 2;
 
-    // undefined if this character got no seat here
-    const profile = classroomProfiles[characterName];
+    // seat = look at the desk , inbox / fcn = open that software
+    const [view, setView] = useState("seat");
 
-    /**
-     * The map page already stop them before teleport , but someone can still
-     * type /classroom straight in the url , and that time location.state is null
-     * so the map check is totally skipped. This one here is the real door.
-     */
-    if (!profile) {
+    const canEnter = role === "student" || role === "teacher";
+
+    if (!canEnter) {
         return (
             <div className="classroom-page denied">
                 <div className="denied-box">
                     <h2>You cannot enter here</h2>
-                    <p>{characterName} has no seat in this classroom.</p>
+                    <p>Only student and teacher can enter this classroom.</p>
                     <button type="button" onClick={() => navigate(-1)}>
                         Back
                     </button>
@@ -32,27 +31,50 @@ function Classroom() {
         );
     }
 
-    return (
-        <div className={`classroom-page theme-${profile.theme}`}>
-            <header className="classroom-top">
-                <div>
-                    <h1>Classroom Sem {sem}</h1>
-                    <p className="classroom-seat">
-                        {characterName} {role && `· ${role}`} · {profile.seat}
-                    </p>
-                </div>
+    const background = role === "teacher" ? paulPov : zeyuPov;
 
-                <button type="button" className="classroom-back" onClick={() => navigate(-1)}>
-                    Back to Map
+    const goMap = () => {
+        navigate("/map", { state: { characterName, role } });
+    };
+
+    // open software on the laptop
+    if (view !== "seat") {
+        return (
+            <div className="classroom-page classroom-app-view">
+                <button type="button" className="classroom-back seat-back" onClick={() => setView("seat")}>
+                    Back to Seat
                 </button>
-            </header>
 
-            {/* the laptop on the desk , apps based on role */}
-            <div className="laptop">
-                <div className="laptop-screen">
-                    <LaptopDesktop apps={profile.apps} defaultApp={profile.defaultApp} />
+                <div className="laptop classroom-app-laptop">
+                    <div className="laptop-screen">
+                        {view === "inbox" && <InboxApp />}
+                        {view === "fcn" && <ForwardCampusNetwork />}
+                    </div>
+                    <div className="laptop-base" />
                 </div>
-                <div className="laptop-base" />
+            </div>
+        );
+    }
+
+    return (
+        <div
+            className="classroom-page classroom-seat-view"
+            style={{ backgroundImage: `url(${background})`,backgroundPosition:"bottom" }}
+        >
+            <button type="button" className="classroom-back map-back" onClick={goMap}>
+                Back to Map
+            </button>
+
+            <div className="desk-apps">
+                <button type="button" className="desk-app-btn" onClick={() => setView("inbox")}>
+                    Inbox
+                </button>
+
+                {role === "teacher" && (
+                    <button type="button" className="desk-app-btn" onClick={() => setView("fcn")}>
+                        Campus Network
+                    </button>
+                )}
             </div>
         </div>
     );

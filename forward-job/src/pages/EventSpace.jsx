@@ -1,9 +1,33 @@
-function EventSpace() {
+import { useNavigate , useLocation } from "react-router"
+import Espace from "../images/EventSpace.png"
+import "../css/classroom.css"
+
+
+function EventSpace() {   
+    const navigate = useNavigate()
+    const location = useLocation()
+    // useLocation to get the state
+    const characterName = location.state?.characterName || "Unknown"
+    const role = location.state?.role || ""
+
+    const goMap = () => {
+        navigate("/map",{state:{ characterName,role}})
+    }
+    
     return (
-        <div style={{ padding: "2rem", fontFamily: "sans-serif" }}>
-            <h1>Event Space</h1>
+        <div
+            className="classroom-page classroom-seat-view"
+            style={{ backgroundImage:`url(${Espace})`,backgroundPosition:"center 52%"}}
+        >
+            {/* <h1 className="text-center mb-5">
+                Software Engineer need more breaks...
+            </h1> */}
+            <button type="button" className="classroom-back map-back" onClick={goMap} >
+                Back to Map
+            </button>
         </div>
-    );
+    )
+
 }
 
 export default EventSpace;

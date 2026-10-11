@@ -5,15 +5,11 @@ exports.getAllInbox = async (req, res) => {
     try {
         const filter = {};
 
-        if (req.query.to) filter.to = req.query.to;
-        if (req.query.from) filter.from = req.query.from;
         if (req.query.type) filter.type = req.query.type;
         if (req.query.isRead !== undefined) filter.isRead = req.query.isRead === "true";
 
-        // normal user only see their own inbox
-        if (req.user.role !== "admin") {
-            filter.to = req.user._id;
-        }
+        // everyone only see letters sent to themselves (include admin)
+        filter.to = req.user._id;
 
         const messages = await Inbox.find(filter)
             .populate("from", "name role characterName")

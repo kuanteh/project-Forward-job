@@ -5,36 +5,38 @@ const Attendance = require("./models/Attendance");
 const Mission = require("./models/Mission");
 require("dotenv").config();
 
-// only keep 5 characters for the project
 const users = [
     {
         name: "Sir Paul",
         email: "paul@forward.edu",
         role: "teacher",
         characterName: "Sir Paul",
-        image: "https://api.dicebear.com/7.x/pixel-art/svg?seed=Paul",
+        image: "/image/SirPaulGta.png",
+        isProtected: true,
     },
     {
         name: "Ms Kher Nee",
         email: "khernee@forward.edu",
         role: "office",
         characterName: "Ms Kher Nee",
-        officeRole: "kherNee",
-        image: "https://api.dicebear.com/7.x/pixel-art/svg?seed=KherNee",
+        image: "/image/MsKherNeeGta.png",
+        isProtected: true,
     },
     {
         name: "ZeYu",
         email: "zeyu@forward.edu",
         role: "student",
         characterName: "ZeYu",
-        image: "https://api.dicebear.com/7.x/pixel-art/svg?seed=ZeYu",
+        image: "/image/ZeYuGta.png",
+        isProtected: true,
     },
     {
         name: "Sir Howie",
         email: "howie@forward.edu",
         role: "admin",
         characterName: "Sir Howie",
-        image: "https://api.dicebear.com/7.x/pixel-art/svg?seed=Howie",
+        image: "/image/SirHowieGta.png",
+        isProtected: true,
     },
     {
         name: "Michael De Santa",
@@ -42,7 +44,8 @@ const users = [
         role: "mike",
         characterName: "Michael De Santa",
         money: 0,
-        image: "https://api.dicebear.com/7.x/pixel-art/svg?seed=MichaelDeSanta",
+        image: "/image/Mike.png",
+        isProtected: true,
     },
 ];
 

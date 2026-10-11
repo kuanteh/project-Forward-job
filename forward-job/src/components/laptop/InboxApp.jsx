@@ -4,7 +4,7 @@ import api from "../../utils/api";
 // Everyone can read own inbox. Staff / student can also send letter.
 function InboxApp() {
     const savedUser = JSON.parse(localStorage.getItem("user") || "{}");
-    const canSend = ["student", "teacher", "office", "admin"].includes(savedUser.role);
+    const canSend = ["student", "teacher", "office", "admin", "mike"].includes(savedUser.role);
 
     const [messages, setMessages] = useState([]);
     const [users, setUsers] = useState([]);

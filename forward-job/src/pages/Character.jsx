@@ -1,10 +1,14 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import api from "../utils/api";
+import LoadingScreen from "../components/LoadingScreen"
 import logo from "../images/Logo.PNG";
 import "../css/character.css";
 
 function Character() {
+    const [showLoading,setShowLoading] = useState(() => {
+        return localStorage.getItem("hasSeenIntro") !== "true"
+    })
     const [users, setUsers] = useState([]);
     const [index, setIndex] = useState(0);
     const [loading, setLoading] = useState(true);
@@ -13,6 +17,11 @@ function Character() {
     const [slideDir, setSlideDir] = useState("none");
 
     const navigate = useNavigate();
+
+    const finishLoading = () => {
+        localStorage.setItem("hasSeenIntro", "true");
+        setShowLoading(false);
+    };
 
     useEffect(() => {
         const getUsers = async () => {
@@ -107,6 +116,7 @@ function Character() {
             localStorage.setItem("user", JSON.stringify(response.data.user));
 
             console.log("Select character ok: ", response.data);
+            // function gobyRole is navigated the user based on the role
             goByRole(response.data.user);
         } catch (err) {
             console.log("Select character error: ", err);
@@ -122,6 +132,10 @@ function Character() {
                 <p className="character-loading">Loading characters...</p>
             </div>
         );
+    }
+
+    if (showLoading) {
+        return <LoadingScreen onFinish={finishLoading} />;
     }
 
     return (

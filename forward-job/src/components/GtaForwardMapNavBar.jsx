@@ -1,11 +1,5 @@
 import "../css/gtaForwardMapNavBar.css";
 
-/**
- * The location list on the top right corner , same idea as the GTA V map legend.
- * No useState inside here on purpose , activeId come from GtaForwardMap.
- * If this component keep its own "selected" , the list and the map icon
- * will show two different thing.
- */
 function GtaForwardMapNavBar({ locations, activeId, onSelect }) {
     return (
         <nav className="map-navbar">
