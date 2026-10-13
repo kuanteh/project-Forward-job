@@ -93,15 +93,24 @@ function GtaForwardMap() {
                 </button>
 
                 {blockedMessage && (
-                    <div className="map-popup">
-                        <div className="map-popup-box">
-                            <h3>Access Denied</h3>
-                            <p>{blockedMessage}</p>
-                            <button type="button" onClick={() => setBlockedMessage("")}>
-                                OK
-                            </button>
-                        </div>
-                    </div>
+                    <div className="loading-overlay d-flex flex-column align-items-center justify-content-center">
+                    <h1 className="loadingT">
+                        ERROR -- you no have permission to Enter
+                    </h1>
+
+                    <div className="loadingLine"/>
+
+                    <button type="button" className="Lbutton" onClick={() => setBlockedMessage("")}>
+                        <p className="loadingP">
+                            {blockedMessage}
+                            <br />
+                            OK
+                        </p>
+                    </button>
+
+                    <div className="loadingLine"/>
+
+                </div>
                 )}
             </div>
         </div>

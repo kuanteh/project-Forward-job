@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import api from "../../utils/api";
 
-// Office (Ms Kher Nee) review / edit attendance
+// Office review / edit / delete attendance
 function ReviewAttendance() {
     const [records, setRecords] = useState([]);
+    const [nameFilter, setNameFilter] = useState("");
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
     const [message, setMessage] = useState("");
@@ -51,34 +52,70 @@ function ReviewAttendance() {
         }
     };
 
+    const handleDelete = async (id) => {
+        setMessage("");
+
+        try {
+            const userToken = localStorage.getItem("token");
+            await api.delete(`/attendance/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${userToken}`,
+                },
+            });
+            setMessage("Deleted.");
+            getRecords();
+        } catch (err) {
+            console.log("Delete attendance error: ", err);
+            setMessage("Delete failed.");
+        }
+    };
+
+    const shown = records.filter((record) => {
+        const studentName = (record.student?.characterName || "").toLowerCase();
+        return !nameFilter || studentName.includes(nameFilter.trim().toLowerCase());
+    });
+
     if (loading) return <p className="laptop-note">Loading attendance...</p>;
     if (error) return <p className="laptop-note error">{error}</p>;
 
     return (
         <div className="fcn-panel">
             <h4>Review Attendance</h4>
-            <p className="fcn-hint">Check and edit the records teachers marked.</p>
+            <p className="fcn-hint">Filter by student name, then update / delete.</p>
+            <div className="teacher-form review-filters">
+                <input
+                    type="text"
+                    placeholder="Student name"
+                    value={nameFilter}
+                    onChange={(e) => setNameFilter(e.target.value)}
+                />
+            </div>
 
-            {records.length === 0 ? (
+            {shown.length === 0 ? (
                 <p className="laptop-note">No attendance record yet.</p>
             ) : (
                 <ul className="attendance-list">
-                    {records.map((record) => (
+                    {shown.map((record) => (
                         <li key={record._id}>
                             <div className="review-main">
                                 <span>{record.student?.characterName}</span>
                                 <span className="review-meta">
-                                    by {record.markedBy?.characterName || "-"}
+                                    {record.date ? new Date(record.date).toLocaleDateString() : ""} · by {record.markedBy?.characterName || "-"}
                                 </span>
                             </div>
-                            <select
-                                value={record.status}
-                                onChange={(e) => handleUpdate(record._id, e.target.value)}
-                            >
-                                <option value="present">Present</option>
-                                <option value="late">Late</option>
-                                <option value="absent">Absent</option>
-                            </select>
+                            <div className="manage-actions">
+                                <select
+                                    value={record.status}
+                                    onChange={(e) => handleUpdate(record._id, e.target.value)}
+                                >
+                                    <option value="present">Present</option>
+                                    <option value="late">Late</option>
+                                    <option value="absent">Absent</option>
+                                </select>
+                                <button className="delete-btn" type="button" onClick={() => handleDelete(record._id)}>
+                                    Delete
+                                </button>
+                            </div>
                         </li>
                     ))}
                 </ul>

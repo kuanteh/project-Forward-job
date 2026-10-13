@@ -6,12 +6,9 @@ const auth = require("../middlewares/auth");
 router.use(express.json());
 
 router.get("/", auth.authenticate, attendanceController.getAllAttendance);
-router.get("/student/:id", auth.authenticate, attendanceController.getAttendanceByStudentId);
-router.get("/:id", auth.authenticate, attendanceController.getAttendanceById);
 
-// office / teacher / admin manage attendance
-router.post("/", auth.authenticate, auth.requireRole("office", "teacher", "admin"), attendanceController.createAttendance);
-router.patch("/:id", auth.authenticate, auth.requireRole("office", "teacher", "admin"), attendanceController.updateAttendance);
-router.delete("/:id", auth.authenticate, auth.requireRole("office", "admin"), attendanceController.deleteAttendance);
+router.post("/", auth.authenticate, auth.requireRole("teacher"), attendanceController.createAttendance);
+router.patch("/:id", auth.authenticate, auth.requireRole("office"), attendanceController.updateAttendance);
+router.delete("/:id", auth.authenticate, auth.requireRole("office"), attendanceController.deleteAttendance);
 
 module.exports = router;

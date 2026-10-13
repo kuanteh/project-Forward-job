@@ -11,6 +11,6 @@ router.get("/:id", auth.authenticate, inboxController.getInboxById);
 // student / teacher / office / admin / mike can send letter
 router.post("/", auth.authenticate, auth.requireRole("student", "office", "admin", "teacher", "mike"), inboxController.createInbox);
 router.patch("/:id", auth.authenticate, inboxController.updateInbox);
-router.delete("/:id", auth.authenticate, auth.requireRole("office", "admin"), inboxController.deleteInbox);
+router.delete("/:id", auth.authenticate, inboxController.deleteInbox);
 
 module.exports = router;

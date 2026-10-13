@@ -3,7 +3,6 @@ import Character from "./pages/Character"
 import Classroom from "./pages/Classroom"
 import Counter from "./pages/Counter"
 import EventSpace from "./pages/EventSpace"
-// import Kitchen from "./pages/Kitchen"
 import SofaArea from "./pages/SofaArea" 
 import MeetingRoom1 from "./pages/MeetingRoom1"
 import Office from "./pages/Office"
@@ -21,7 +20,6 @@ function App() {
                 <Route path="/counter" element={<Counter />} />
                 <Route path="/eventSpace" element={<EventSpace />} />
                 <Route path="/SofaArea" element={<SofaArea />}/>
-                {/* <Route path="/kitchen" element={<Kitchen />} /> */}
                 <Route path="/meetingroom1" element={<MeetingRoom1 />} />
                 <Route path="/office" element={<Office />} />
                 <Route path="/pingpong" element={<PingPong />} />

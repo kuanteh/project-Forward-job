@@ -4,6 +4,7 @@ import InboxApp from "../components/laptop/InboxApp";
 import ForwardCampusNetwork from "../components/laptop/ForwardCampusNetwork";
 import paulPov from "../images/SirPaulPOV.png";
 import zeyuPov from "../images/Sem1ClassroomPOVZeYu.png";
+import "../css/laptop.css";
 import "../css/classroom.css";
 
 function Classroom() {

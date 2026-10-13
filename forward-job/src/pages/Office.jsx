@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router"
 import InboxApp from "../components/laptop/InboxApp"
 import ForwardCampusNetwork from "../components/laptop/ForwardCampusNetwork"
 import kherNeePov from "../images/MsKherNeePOV.png"
+import "../css/laptop.css"
 import "../css/classroom.css"
 
 function Office () {

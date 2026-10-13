@@ -1,16 +1,15 @@
 const Mission = require("../models/Mission");
 const User = require("../models/User");
 
-// GET /missions?player=...&status=active&type=pingpong
+// GET /missions?type=pingpong&status=completed
 exports.getAllMissions = async (req, res) => {
     try {
         const filter = {};
 
-        if (req.query.player) filter.player = req.query.player;
-        if (req.query.status) filter.status = req.query.status;
         if (req.query.type) filter.type = req.query.type;
+        if (req.query.status) filter.status = req.query.status;
 
-        // mike / non-admin only see own missions
+        // mike only see own missions
         if (req.user.role !== "admin") {
             filter.player = req.user._id;
         }
@@ -37,11 +36,17 @@ exports.getMissionById = async (req, res) => {
     }
 };
 
+// Mike click Mission Start
 exports.createMission = async (req, res) => {
     try {
         const mission = new Mission({
-            ...req.body,
-            player: req.body.player || req.user._id,
+            player: req.user._id,
+            title: "Shoot 10 targets",
+            type: req.body.type,
+            status: "active",
+            reward: 67000,
+            collectedCount: 0,
+            targetCount: 10,
         });
         await mission.save();
 
@@ -61,10 +66,15 @@ exports.updateMission = async (req, res) => {
         if (!mission) throw new Error("Mission not found");
 
         const alreadyCompleted = mission.status === "completed";
-        Object.assign(mission, req.body);
 
-        // if mission just completed, give money to player (only once)
+        if (req.body.collectedCount !== undefined) {
+            mission.collectedCount = req.body.collectedCount;
+        }
+
+        // first time complete -> give money
         if (req.body.status === "completed" && !alreadyCompleted) {
+            mission.status = "completed";
+            mission.collectedCount = mission.targetCount;
             mission.completedAt = new Date();
             await User.findByIdAndUpdate(mission.player, {
                 $inc: { money: mission.reward },

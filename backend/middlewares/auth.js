@@ -2,6 +2,10 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 
 // Create and Export a MiddleWare ( "authenticate" export 出去 , 其他file 可以import)
+/**
+ *  req = request the Hedaders , body , params
+ *  res = respone , json, status
+ */
 exports.authenticate = async (req, res, next) => {
     try {
         if (!req.headers.authorization) {

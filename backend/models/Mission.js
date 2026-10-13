@@ -8,36 +8,28 @@ const MissionSchema = mongoose.Schema({
     },
     title: {
         type: String,
-        required: true,
+        default: "Shoot 10 targets",
     },
-    // pingpong / lostFound
+    // which pov : pingpong / sofa / event
     type: {
         type: String,
-        enum: ["pingpong", "lostFound"],
+        enum: ["pingpong", "sofa", "event"],
         required: true,
     },
     status: {
         type: String,
-        enum: ["pending", "active", "completed", "failed"],
-        default: "pending",
+        enum: ["active", "completed"],
+        default: "active",
     },
     reward: {
         type: Number,
-        default: 200,
-    },
-    targetCount: {
-        type: Number,
-        default: 20,
+        default: 67000,
     },
     collectedCount: {
         type: Number,
         default: 0,
     },
-    // for lostFound mission, e.g. kitchen / toilet / sofa
-    targetLocation: {
-        type: String,
-    },
-    timeLimit: {
+    targetCount: {
         type: Number,
         default: 10,
     },

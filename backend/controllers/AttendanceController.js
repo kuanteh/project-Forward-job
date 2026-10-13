@@ -1,26 +1,9 @@
 const Attendance = require("../models/Attendance");
 
-// GET /attendance?student=...&status=present&date=2026-09-24
+// GET /attendance
 exports.getAllAttendance = async (req, res) => {
     try {
-        const filter = {};
-
-        if (req.query.student) filter.student = req.query.student;
-        if (req.query.status) filter.status = req.query.status;
-
-        if (req.query.date) {
-            const day = new Date(req.query.date);
-            const nextDay = new Date(day);
-            nextDay.setDate(day.getDate() + 1);
-            filter.date = { $gte: day, $lt: nextDay };
-        }
-
-        // student only see own attendance
-        if (req.user.role === "student") {
-            filter.student = req.user._id;
-        }
-
-        const records = await Attendance.find(filter)
+        const records = await Attendance.find()
             .populate("student", "name characterName role")
             .populate("markedBy", "name characterName role")
             .sort({ date: -1 });
@@ -31,38 +14,10 @@ exports.getAllAttendance = async (req, res) => {
     }
 };
 
-exports.getAttendanceById = async (req, res) => {
-    try {
-        const record = await Attendance.findById(req.params.id)
-            .populate("student", "name characterName role")
-            .populate("markedBy", "name characterName role");
-
-        if (!record) throw new Error("Attendance record not found");
-        res.json(record);
-    } catch (error) {
-        res.status(400).json({ error: error.message });
-    }
-};
-
-exports.getAttendanceByStudentId = async (req, res) => {
-    try {
-        const studentId = req.params.id
-        const records = await Attendance.find({ student:studentId })
-        .populate("student", "name characterName role")
-        .populate("markedBy", "name characterName role");
-        if (!records || records.length === 0) {
-            return res.status(404).json({ error: "No attendance records found for this student" });
-        }
-        res.json(records);
-    } catch (error) {
-        res.status(400).json({ error: error.message });
-    }
-};
-
 exports.createAttendance = async (req, res) => {
     try {
         const record = new Attendance({
-            ...req.body,
+            ...req.body, // student
             markedBy: req.body.markedBy || req.user._id,
         });
         await record.save();
@@ -77,13 +32,18 @@ exports.createAttendance = async (req, res) => {
     }
 };
 
+// office only change status
 exports.updateAttendance = async (req, res) => {
     try {
         const { id } = req.params;
-        const updated = await Attendance.findByIdAndUpdate(id, req.body, {
-            new: true,
-            runValidators: true,
-        })
+        const updated = await Attendance.findByIdAndUpdate(
+            id,
+            { status: req.body.status }, // just change this status
+            {
+                new: true,
+                runValidators: true,
+            }
+        )
             .populate("student", "name characterName role")
             .populate("markedBy", "name characterName role");
 

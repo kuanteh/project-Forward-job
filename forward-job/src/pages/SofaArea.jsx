@@ -1,14 +1,17 @@
+import { useState } from "react"
 import { useNavigate , useLocation } from "react-router"
 import backgroudsofa from "../images/SofaArea.png"
+import MoneyHud from "../components/MoneyHud"
+import ShootingMission from "../components/ShootingMission"
 import "../css/classroom.css"
-
+import "../css/shootingMission.css"
 
 function SofaArea() {   
     const navigate = useNavigate()
     const location = useLocation()
-    // useLocation to get the state
     const characterName = location.state?.characterName || "Unknown"
     const role = location.state?.role || ""
+    const [playing, setPlaying] = useState(false)
 
     const goMap = () => {
         navigate("/map",{state:{ characterName,role}})
@@ -19,15 +22,20 @@ function SofaArea() {
             className="classroom-page classroom-seat-view"
             style={{ backgroundImage:`url(${backgroudsofa})`,backgroundPosition:"center 90%"}}
         >
-            {/* <h1 className="text-center mb-5">
-                Software Engineer need more breaks...
-            </h1> */}
+            <MoneyHud />
             <button type="button" className="classroom-back map-back" onClick={goMap} >
                 Back to Map
             </button>
+
+            {role === "mike" && !playing && (
+                <button type="button" className="mission-start-btn" onClick={() => setPlaying(true)}>
+                    Mission Start
+                </button>
+            )}
+
+            {playing && <ShootingMission type="sofa" goMap={goMap} />}
         </div>
     )
-
 }
 
 export default SofaArea;

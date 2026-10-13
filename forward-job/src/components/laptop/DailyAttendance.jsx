@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import api from "../../utils/api";
 
-// Teacher (Sir Paul) mark student attendance for today
+// Teacher mark one student for a date
 function DailyAttendance() {
     const [students, setStudents] = useState([]);
-    const [statusMap, setStatusMap] = useState({});
+    const [studentId, setStudentId] = useState("");
+    const [date, setDate] = useState(new Date().toISOString().slice(0, 10));
+    const [status, setStatus] = useState("present");
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
     const [message, setMessage] = useState("");
@@ -15,12 +17,9 @@ function DailyAttendance() {
             try {
                 const response = await api.get("/users?role=student");
                 setStudents(response.data);
-
-                const startMap = {};
-                response.data.forEach((student) => {
-                    startMap[student._id] = "present";
-                });
-                setStatusMap(startMap);
+                if (response.data.length > 0) {
+                    setStudentId(response.data[0]._id);
+                }
             } catch (err) {
                 console.log("Get students error: ", err);
                 setError("Cannot load students.");
@@ -32,34 +31,26 @@ function DailyAttendance() {
         getStudents();
     }, []);
 
-    const handleStatusChange = (studentId, status) => {
-        setStatusMap({ ...statusMap, [studentId]: status });
-    };
-
-    const handleSave = async () => {
+    const handleSave = async (e) => {
+        e.preventDefault();
         setSaving(true);
         setMessage("");
 
         try {
             const userToken = localStorage.getItem("token");
-            const today = new Date().toISOString().slice(0, 10);
-
-            for (const student of students) {
-                await api.post(
-                    "/attendance",
-                    {
-                        student: student._id,
-                        date: today,
-                        status: statusMap[student._id] || "present",
+            await api.post(
+                "/attendance",
+                {
+                    student: studentId,
+                    date,
+                    status,
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${userToken}`,
                     },
-                    {
-                        headers: {
-                            Authorization: `Bearer ${userToken}`,
-                        },
-                    }
-                );
-            }
-
+                }
+            );
             setMessage("Attendance saved.");
         } catch (err) {
             console.log("Save attendance error: ", err);
@@ -75,33 +66,36 @@ function DailyAttendance() {
     return (
         <div className="fcn-panel">
             <h4>Daily Attendance</h4>
-            <p className="fcn-hint">Mark each student for today.</p>
+            <p className="fcn-hint">Pick a date and a student, then save the status.</p>
 
             {students.length === 0 ? (
                 <p className="laptop-note">No student yet.</p>
             ) : (
-                <ul className="attendance-list">
-                    {students.map((student) => (
-                        <li key={student._id}>
-                            <span>{student.characterName}</span>
-                            <select
-                                value={statusMap[student._id] || "present"}
-                                onChange={(e) => handleStatusChange(student._id, e.target.value)}
-                            >
-                                <option value="present">Present</option>
-                                <option value="late">Late</option>
-                                <option value="absent">Absent</option>
-                            </select>
-                        </li>
-                    ))}
-                </ul>
+                <form className="teacher-form" onSubmit={handleSave}>
+                    <input
+                        type="date"
+                        value={date}
+                        onChange={(e) => setDate(e.target.value)}
+                        required
+                    />
+                    <select value={studentId} onChange={(e) => setStudentId(e.target.value)} required>
+                        {students.map((student) => (
+                            <option key={student._id} value={student._id}>
+                                {student.characterName}
+                            </option>
+                        ))}
+                    </select>
+                    <select value={status} onChange={(e) => setStatus(e.target.value)}>
+                        <option value="present">Present</option>
+                        <option value="late">Late</option>
+                        <option value="absent">Absent</option>
+                    </select>
+                    <button type="submit" disabled={saving}>
+                        {saving ? "Saving..." : "Save"}
+                    </button>
+                    {message && <p className="form-note">{message}</p>}
+                </form>
             )}
-
-            <button className="fcn-btn" type="button" onClick={handleSave} disabled={saving || students.length === 0}>
-                {saving ? "Saving..." : "Save Attendance"}
-            </button>
-
-            {message && <p className="form-note">{message}</p>}
         </div>
     );
 }

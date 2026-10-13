@@ -1,0 +1,92 @@
+.money-hud {
+    position: absolute;
+    top: 1.2rem;
+    left: 1.2rem;
+    z-index: 6;
+    padding: 0.35rem 0.8rem;
+    background: rgba(0, 0, 0, 0.55);
+    color: #fbbf24;
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.counter-earn {
+    position: absolute;
+    left: 50%;
+    bottom: 14vh;
+    transform: translateX(-50%);
+    z-index: 6;
+    padding: 0.8rem 1.4rem;
+    background: rgba(0, 0, 0, 0.65);
+    color: #fbbf24;
+    font-size: 1.15rem;
+    font-weight: 700;
+}
+
+.mission-start-btn {
+    position: absolute;
+    left: 50%;
+    bottom: 14vh;
+    transform: translateX(-50%);
+    z-index: 6;
+    min-width: 180px;
+    padding: 0.8rem 1.4rem;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.65);
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.shoot-layer {
+    position: absolute;
+    inset: 0;
+    z-index: 4;
+}
+
+.shoot-target {
+    position: absolute;
+    width: 52px;
+    height: 52px;
+    border: 3px solid #ffffff;
+    border-radius: 50%;
+    background: rgba(220, 38, 38, 0.85);
+    cursor: pointer;
+    transform: translate(-50%, -50%);
+}
+
+.shoot-target:disabled {
+    background: rgba(80, 80, 80, 0.7);
+    border-color: #9ca3af;
+    cursor: default;
+}
+
+.shoot-count {
+    position: absolute;
+    top: 1.2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 6;
+    color: #ffffff;
+    font-size: 1.1rem;
+    text-shadow: 0 1px 4px #000;
+}
+
+.mission-aim {
+    position: absolute;
+    left: 50%;
+    bottom: -180px;
+    transform: translateX(-50%);
+    z-index: 3;
+    width: min(420px, 55vw);
+    height: auto;
+    pointer-events: none;
+}
+
+.mission-aim img {
+    display: block;
+    width: 100%;
+    height: auto;
+}

@@ -169,7 +169,7 @@ function ManageUsers() {
                 {users.map((user) => (
                     <li key={user._id}>
                         <div className="review-main">
-                            <span>{user.characterName || user.name}</span>
+                            <span>{user.name}</span>
                             <span className="review-meta">{user.role}{user.isProtected ? " · core" : ""}</span>
                         </div>
                         <div className="manage-actions">

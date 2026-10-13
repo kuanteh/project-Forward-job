@@ -1,0 +1,68 @@
+/* laptop shell + shared app header */
+
+.laptop {
+    width: 100%;
+    max-width: 760px;
+}
+
+.laptop-screen {
+    height: 380px;
+    padding: 0.6rem;
+    box-sizing: border-box;
+    border: 10px solid #1f2937;
+    border-radius: 10px 10px 0 0;
+    background: #0f1115;
+    overflow: hidden;
+}
+
+.laptop-base {
+    height: 14px;
+    border-radius: 0 0 14px 14px;
+    background: linear-gradient(#374151, #1f2937);
+}
+
+.laptop-app {
+    position: relative;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    color: #e5e7eb;
+}
+
+.app-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 0.5rem;
+    margin-bottom: 0.6rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.app-title {
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.app-count {
+    color: #6b7280;
+    font-size: 0.7rem;
+}
+
+.laptop-note {
+    margin: 0;
+    padding: 1rem 0.2rem;
+    color: #6b7280;
+    font-size: 0.8rem;
+}
+
+.laptop-note.error {
+    color: #f87171;
+}
+
+@media (max-width: 768px) {
+    .laptop-screen {
+        height: 520px;
+    }
+}
